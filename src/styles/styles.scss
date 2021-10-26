@@ -1,0 +1,64 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css");
+@import url('https://fonts.googleapis.com/css2?family=ABeeZee:ital@0;1&family=Roboto+Slab&display=swap');
+
+h1,
+h3,
+h4,
+h5 {
+    font-family: 'Roboto Slab', serif;
+}
+
+body {
+    font-family: 'ABeeZee', sans-serif;
+}
+
+#cringyVow {
+    padding: 48px 12px;
+    line-height: 60px;
+    background-color: #1baf6440;
+    border-radius: 24px;
+
+    &::after,
+    &::before {
+        content: "\"";
+        font-size: 59px;
+        color: #1baf64;
+    }
+}
+
+#school {
+    width: 100%;
+}
+
+#sidebar {
+    height: 100vh;
+    background-color: #1baf64;
+    position: absolute;
+    width: 100vw;
+    transition: ease-in-out .75s;
+
+    .btn {
+        position: absolute;
+        top: 25px;
+        right: 25px;
+    }
+
+    ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        font-size: 24px;
+        padding: 40px;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: black;
+    transition: .5s;
+    padding: 8px 8px;
+
+    &:hover {
+        color: azure;
+    }
+}
