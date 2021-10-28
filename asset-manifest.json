@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/student-council-blog/static/css/main.cb1df452.chunk.css",
+    "main.js": "/student-council-blog/static/js/main.bc7b3d4a.chunk.js",
+    "main.js.map": "/student-council-blog/static/js/main.bc7b3d4a.chunk.js.map",
+    "runtime-main.js": "/student-council-blog/static/js/runtime-main.68175c0f.js",
+    "runtime-main.js.map": "/student-council-blog/static/js/runtime-main.68175c0f.js.map",
+    "static/css/2.7b3ebcbe.chunk.css": "/student-council-blog/static/css/2.7b3ebcbe.chunk.css",
+    "static/js/2.fcc16fea.chunk.js": "/student-council-blog/static/js/2.fcc16fea.chunk.js",
+    "static/js/2.fcc16fea.chunk.js.map": "/student-council-blog/static/js/2.fcc16fea.chunk.js.map",
+    "index.html": "/student-council-blog/index.html",
+    "static/css/2.7b3ebcbe.chunk.css.map": "/student-council-blog/static/css/2.7b3ebcbe.chunk.css.map",
+    "static/css/main.cb1df452.chunk.css.map": "/student-council-blog/static/css/main.cb1df452.chunk.css.map",
+    "static/js/2.fcc16fea.chunk.js.LICENSE.txt": "/student-council-blog/static/js/2.fcc16fea.chunk.js.LICENSE.txt",
+    "static/media/AUSLogo.afeb21c0.png": "/student-council-blog/static/media/AUSLogo.afeb21c0.png",
+    "static/media/realAUS.d5a7b7b3.png": "/student-council-blog/static/media/realAUS.d5a7b7b3.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.68175c0f.js",
+    "static/css/2.7b3ebcbe.chunk.css",
+    "static/js/2.fcc16fea.chunk.js",
+    "static/css/main.cb1df452.chunk.css",
+    "static/js/main.bc7b3d4a.chunk.js"
+  ]
+}
