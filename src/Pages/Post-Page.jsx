@@ -2,6 +2,7 @@ import { doc, getDoc } from "@firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
+import Loading from "../Loading";
 
 const PostPage = () => {
   const { postID } = useParams();
@@ -15,9 +16,7 @@ const PostPage = () => {
     });
   }, []);
 
-  console.log(postInfo);
-
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading />;
   else
     return (
       <main>

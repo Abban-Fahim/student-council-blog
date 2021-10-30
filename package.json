@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "license": "ISC",
-  "homepage": "https://abban-fahim.github.io/student-council-blog/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -26,7 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "firebase deploy"
   },
   "eslintConfig": {
     "extends": [
