@@ -6,10 +6,12 @@ import PostPage from "./Pages/Post-Page";
 import NewPost from "./Pages/New-post";
 import ExhibitionPage from "./Pages/Exhibition-page";
 import Login from "./Pages/Login";
+import AdminPage from "./Pages/Admin-page";
+import EditPage from "./Pages/Edit-page";
 
 function App() {
   const [sidebarVisisble, setSideBarVisible] = useState(false);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const [isAdmin, setIsAdmin] = useState(false);
 
   const toggleTheme = () => {
@@ -60,39 +62,39 @@ function App() {
             onClick={toggleSidebar}
             onMouseOver={handleHover}
             onMouseLeave={handleHoverOut}
-            to="/about"
-            className="purple"
+            to="/exhibition"
+            className="orange"
           >
-            About us
+            Exhibition
           </Link>
           <Link
             onClick={toggleSidebar}
             onMouseOver={handleHover}
             onMouseLeave={handleHoverOut}
-            to="/exhibition"
-            className="orange"
+            to="/about"
+            className="purple"
           >
-            Exhibition
+            About us
           </Link>
           {isAdmin ? (
             <Link
               onClick={toggleSidebar}
               onMouseOver={handleHover}
               onMouseLeave={handleHoverOut}
-              to="/admin/new"
+              to="/admin"
               className="green"
             >
-              New article
+              Admin
             </Link>
           ) : null}
-          <div id="sidebar-img" className={buttonHovering ? "visible" : null}>
+          {/* <div id="sidebar-img" className={buttonHovering ? "visible" : null}>
             <img
               src={buttonHovering ? "img/" + buttonHovering + ".png" : null}
               width="100%"
               alt={buttonHovering}
               className={buttonHovering ? "visible" : null}
             />
-          </div>
+          </div> */}
         </ul>
         <button
           onClick={toggleSidebar}
@@ -106,13 +108,14 @@ function App() {
         <div className="text-center" id="logo">
           <img src="img/AUSLogo.png" alt="Arab Unity Logo" />
         </div>
-        <button
-          onClick={toggleTheme}
-          className="btn btn-outline-secondary fs-3"
-        >
-          <i className={`bi bi-${theme === "light" ? "sun" : "moon"}-fill`}></i>
-        </button>
       </header>
+      <button
+        onClick={toggleTheme}
+        id="theme"
+        className="btn btn-outline-secondary fs-3"
+      >
+        <i className={`bi bi-${theme === "light" ? "sun" : "moon"}-fill`}></i>
+      </button>
       <Switch>
         <Route path="/about" children={<AboutPage />} />
         <Route path="/admin/new" children={<NewPost />} />
@@ -121,7 +124,8 @@ function App() {
           path="/login"
           children={<Login isAdmin={isAdmin} setIsAdmin={setIsAdmin} />}
         />
-        <Route path="/admin" />
+        <Route path="/admin" children={<AdminPage />} />
+        <Route path="/edit/:id" children={<EditPage />} />
         <Route path="/post/:postID" children={<PostPage />} />
         <Route path="/" children={<MainPage />} />
       </Switch>

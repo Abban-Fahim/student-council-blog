@@ -1,4 +1,4 @@
-import { collection, getDocs, query } from "@firebase/firestore";
+import { collection, getDocs, orderBy, query } from "@firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../firebase";
@@ -12,10 +12,12 @@ const MainPage = () => {
   const [postsLoading, setPostsLoading] = useState(true);
 
   useEffect(() => {
-    getDocs(query(collection(db, "posts"))).then((val) => {
-      setPosts(val);
-      setPostsLoading(false);
-    });
+    getDocs(query(collection(db, "posts"), orderBy("timeStamp", "desc"))).then(
+      (val) => {
+        setPosts(val);
+        setPostsLoading(false);
+      }
+    );
   }, []);
 
   return (
@@ -28,25 +30,26 @@ const MainPage = () => {
         </div>
         <div className="row">
           <div className="col-md-9 p-3">
-            <h4>
+            <h2>
               <i className="bi bi-newspaper text-primary"></i> All Announcements
-            </h4>
+            </h2>
             {postsLoading ? (
               <Loading />
             ) : (
               posts.docs.map((post) => {
-                const { title, content, date } = post.data();
-                const parsedContent = {
-                  __html: `${content.slice(0, 35)}..., published on ${date}`,
-                };
+                const { title, date, author } = post.data();
                 return (
                   <div className="announcement">
                     <Link to={"/post/" + post.id}>
                       <h5>{title}</h5>
-                      <p
-                        class="text-secondary"
-                        dangerouslySetInnerHTML={parsedContent}
-                      />
+                      <div className="d-flex justify-content-between">
+                        <p class="text-secondary">
+                          <b>Published:</b> {date}
+                        </p>
+                        <i className="text-secondary">
+                          <b>By:</b> {author}
+                        </i>
+                      </div>
                     </Link>
                   </div>
                 );
@@ -54,9 +57,9 @@ const MainPage = () => {
             )}
           </div>
           <div className="d-sm-none d-md-block col-md-3 p-3">
-            <h4>
-              <i className="bi bi-stars text-primary"></i>Featured Exhibitions
-            </h4>
+            <h2>
+              <i className="bi bi-stars text-primary"></i>Featured
+            </h2>
           </div>
         </div>
       </section>

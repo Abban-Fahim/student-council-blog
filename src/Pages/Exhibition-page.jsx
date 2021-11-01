@@ -13,16 +13,29 @@ const ExhibitionPage = () => {
       <h2 className="fancy-grad-2">Categories</h2>
       <div id="exhibitions" className="row">
         <div className="col-md-6 col-lg-6">
-          <div></div>
+          <div>
+            <i className="bi bi-pen"></i>Compositions
+          </div>
         </div>
         <div className="col-md-6 col-lg-6">
-          <div></div>
+          <div>
+            <i className="bi bi-brush"></i>Art
+          </div>
         </div>
         <div className="col-md-6 col-lg-6">
-          <div></div>
+          <div>
+            <i className="bi bi-music-note-beamed"></i>Music
+          </div>
         </div>
         <div className="col-md-6 col-lg-6">
-          <div></div>
+          <div>
+            <i className="bi bi-camera2"></i>Photography
+          </div>
+        </div>
+        <div className="col-md-6 col-lg-6">
+          <div>
+            <i className="bi bi-camera-reels"></i>Videography
+          </div>
         </div>
       </div>
     </main>

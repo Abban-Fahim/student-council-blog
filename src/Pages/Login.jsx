@@ -8,13 +8,13 @@ const Login = ({ isAdmin, setIsAdmin }) => {
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(false);
   const [loadingPass, setLoadingPass] = useState(true);
-  let correctPass;
+  const [correctPass, setCorrectPass] = useState("");
 
   function auth() {
     const date = Date.now();
     const sevenDays = 7 * 24 * 60 * 60 * 100 + date;
     console.log(sevenDays - date);
-    if (password == correctPass) {
+    if (password === correctPass) {
       window.localStorage.setItem(
         "isAdmin",
         JSON.stringify({ expiry: sevenDays, auth: true })
@@ -27,8 +27,7 @@ const Login = ({ isAdmin, setIsAdmin }) => {
 
   useEffect(() => {
     getDoc(doc(db, "password", "admin")).then((val) => {
-      correctPass = val.data().password;
-      console.log(correctPass);
+      setCorrectPass(val.data().password);
       setLoadingPass(false);
     });
   }, []);

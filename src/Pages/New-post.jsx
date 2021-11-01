@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useState } from "react";
-import { Editor, EditorState, RichUtils, getDefaultKeyBinding } from "draft-js";
+import { Editor, EditorState, RichUtils } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { stateToHTML } from "draft-js-export-html";
-import { addDoc, collection, setDoc } from "@firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
 import { db } from "../firebase";
 import ReactDropdown from "react-dropdown";
 import "react-dropdown/style.css";
@@ -17,6 +17,7 @@ const NewPost = () => {
   const htmlPreview = stateToHTML(editorState.getCurrentContent());
   const editorRef = useRef(null);
   const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
 
   const handleKeyCommand = useCallback(
     (command, editorState) => {
@@ -35,6 +36,8 @@ const NewPost = () => {
       title: title,
       content: htmlPreview,
       date: new Date().toLocaleDateString("en-GB"),
+      timeStamp: serverTimestamp(),
+      author: author,
     })
       .then(() => history.push("/"))
       .catch((err) => console.error(err));
@@ -146,6 +149,14 @@ const NewPost = () => {
           editorState={editorState}
           onChange={setEditorState}
           handleKeyCommand={handleKeyCommand}
+        />
+      </div>
+      <div className="container post-input border border-2 rounded-3 p-3">
+        <h4>Author</h4>
+        <input
+          type="text"
+          onChange={(e) => setAuthor(e.target.value)}
+          value={author}
         />
       </div>
       <button

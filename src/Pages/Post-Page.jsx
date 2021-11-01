@@ -19,8 +19,13 @@ const PostPage = () => {
   if (loading) return <Loading />;
   else
     return (
-      <main>
-        <h1>{postInfo.title}</h1>
+      <main className="container">
+        <div className="d-flex justify-content-between">
+          <h1>{postInfo.title}</h1>
+          <i className="text-secondary">
+            <b>By:</b> {postInfo.author}
+          </i>
+        </div>
         <div
           className="container"
           id="content"
