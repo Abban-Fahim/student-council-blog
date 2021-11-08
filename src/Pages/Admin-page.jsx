@@ -11,10 +11,14 @@ import { Link, useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import Loading from "../Loading";
 
-const AdminPage = () => {
+const AdminPage = ({ isAdmin }) => {
   const [posts, setPosts] = useState([]);
   const [postsLoading, setPostsLoading] = useState(true);
   const history = useHistory();
+
+  useEffect(() => {
+    if (!isAdmin) history.push("/");
+  }, []);
 
   useEffect(() => {
     getDocs(query(collection(db, "posts"), orderBy("timeStamp", "desc"))).then(

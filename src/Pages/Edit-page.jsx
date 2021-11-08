@@ -23,10 +23,14 @@ import { useHistory, useParams } from "react-router-dom";
 import { stateFromHTML } from "draft-js-import-html";
 import Loading from "../Loading";
 
-const EditPage = () => {
-  const history = useHistory();
+const EditPage = ({ isAdmin }) => {
   const { id } = useParams();
   const [postLoading, setPostLoading] = useState(true);
+  const history = useHistory();
+
+  useEffect(() => {
+    if (!isAdmin) history.push("/");
+  }, []);
 
   useEffect(() => {
     getDoc(doc(db, "posts", id)).then((val) => {

@@ -9,6 +9,13 @@ import Login from "./Pages/Login";
 import AdminPage from "./Pages/Admin-page";
 import EditPage from "./Pages/Edit-page";
 
+const emails = [
+  { title: "Head Boy", email: "kingshukpaul133569d@gmail.com" },
+  { title: "Head Girl", email: "sheemamohamed1505810h@gmail.com" },
+  { title: "Boys H&W Ambassador", email: "muhammadtalhaijaz2005@gmail.com" },
+  { title: "Girls H&W Ambassador", email: "sagdawael39@gmail.com" },
+];
+
 function App() {
   const [sidebarVisisble, setSideBarVisible] = useState(false);
   const [theme, setTheme] = useState("dark");
@@ -118,21 +125,45 @@ function App() {
       </button>
       <Switch>
         <Route path="/about" children={<AboutPage />} />
-        <Route path="/admin/new" children={<NewPost />} />
+        <Route path="/admin/new" children={<NewPost isAdmin={isAdmin} />} />
         <Route path="/exhibition" children={<ExhibitionPage />} />
         <Route
           path="/login"
           children={<Login isAdmin={isAdmin} setIsAdmin={setIsAdmin} />}
         />
-        <Route path="/admin" children={<AdminPage />} />
-        <Route path="/edit/:id" children={<EditPage />} />
+        <Route path="/admin" children={<AdminPage isAdmin={isAdmin} />} />
+        <Route path="/edit/:id" children={<EditPage isAdmin={isAdmin} />} />
         <Route path="/post/:postID" children={<PostPage />} />
         <Route path="/" children={<MainPage />} />
       </Switch>
-      <footer className="bg-primary d-flex">
-        <i className="bi bi-instagram"></i>
-        <i className="bi bi-facebook"></i>
-        <i className="bib bi-web"></i>
+      <footer>
+        <div id="contact-us">
+          <p>Contact us</p>
+          {emails.map((val) => {
+            return (
+              <a
+                target="_blank"
+                href={"https://mail.google.com/mail?view=cm&to=" + val.email}
+              >
+                <small>{val.title}</small>
+              </a>
+            );
+          })}
+        </div>
+        <div>
+          <a href="https://www.instagram.com/arabunityschool/">
+            <i className="bi bi-instagram"></i>
+          </a>
+          <a href="https://www.facebook.com/Arab-Unity-School-100402739103122">
+            <i className="bi bi-facebook"></i>
+          </a>
+          <a href="https://www.youtube.com/channel/UCMG7ffPH5XqvtyXMBcpA8EA">
+            <i className="bi bi-youtube"></i>
+          </a>
+          <a href="https://www.arabunityschool.ae/">
+            <i className="bib bi-globe2"></i>
+          </a>
+        </div>
       </footer>
     </div>
   );

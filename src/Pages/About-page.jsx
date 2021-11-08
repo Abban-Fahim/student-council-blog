@@ -5,8 +5,6 @@ const AboutPage = () => {
     <main className="container">
       <div className="text-center">
         <h1 className="text-primary about-page">Secondary Student Council</h1>
-        <h2 className="fancy-grad-3">Our Vow</h2>
-        <p>We swear to be rude and idiotic!</p>
         <h2 className="fancy-grad-3">Our Vision</h2>
         <p>
           Our vision aims to take initiatives and bring notice to imminent
@@ -35,10 +33,6 @@ const AboutPage = () => {
       <p>
         All content on this page is copyright of the Student Council of Arab
         Unity School, 2021 - 2022, unless otherwise explicitly said so.
-      </p>
-      <p>
-        You may contact the official student council via
-        <a href="mailto:// ! insert their email here :)">email</a>.
       </p>
     </main>
   );

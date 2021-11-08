@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Editor, EditorState, RichUtils } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { stateToHTML } from "draft-js-export-html";
@@ -8,8 +8,12 @@ import ReactDropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import { useHistory } from "react-router-dom";
 
-const NewPost = () => {
+const NewPost = ({ isAdmin }) => {
   const history = useHistory();
+
+  useEffect(() => {
+    if (!isAdmin) history.push("/");
+  }, []);
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()

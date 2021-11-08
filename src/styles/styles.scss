@@ -166,11 +166,9 @@ hr {
   justify-content: center;
   div {
     height: 265px;
-    padding: 34px 116px;
     div {
       height: 100%;
       width: 100%;
-      background-color: #646464;
       font-size: 2.5rem;
     }
     i {
@@ -195,7 +193,7 @@ hr {
 #sidebar {
   height: 96vh;
   position: fixed;
-  width: 25vw;
+  width: 34vw;
   transition: ease-in-out 0.25s;
   border-radius: 10px;
   box-shadow: 1px 1px 1rem #00000050, inset 0 0 2000px #d3d3d34d;
@@ -207,7 +205,7 @@ hr {
     left: 12px;
   }
   &.closed {
-    left: -25vw;
+    left: -34vw;
   }
 
   #close {
@@ -218,9 +216,9 @@ hr {
 
   #menu {
     position: absolute;
-    left: 25vw;
+    left: 34vw;
     top: 3rem;
-    box-shadow: 1px 1px 1rem #00000050, inset 0 0 10px #d3d3d34d;
+    box-shadow: 1px 1px 1rem #00000050, inset 0 0 29px #d3d3d34d;
     backdrop-filter: blur(5px);
     &:hover {
       background-color: #d3d3d34d;
@@ -238,14 +236,15 @@ hr {
       border: #6c6c6c solid 2px;
       margin-bottom: 12px;
       color: #6c6c6c;
+      text-shadow: 0 0 2px #00000098;
       transition: all 0.1s;
       border-radius: 10px;
       text-transform: uppercase;
       font-weight: bold;
       &:hover {
-        box-shadow: 0 0 12px rgba(255, 255, 255, 0.7) inset;
-        border: 1px solid rgba(255, 255, 255, 1);
-        text-shadow: 0.068rem 0.068rem 1px rgba(0, 0, 0, 0.267);
+        box-shadow: 0 0 12px #ffffffb3 inset;
+        border: 1px solid #ffffff;
+        text-shadow: 0.068rem 0.068rem 1px #00000044;
         scale: 1.095;
         -webkit-background-clip: text;
         background-clip: text !important;
@@ -300,7 +299,41 @@ a {
   padding: 8px 8px;
 }
 
+#contact-us {
+  display: flex;
+  flex-wrap: wrap;
+  p {
+    border-bottom: white 1px solid;
+    padding-bottom: 8px;
+    width: 100%;
+  }
+  a {
+    width: 50%;
+    padding: 0;
+    text-decoration: underline;
+  }
+}
+
+footer {
+  background-color: #1baf64;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  i,
+  a {
+    color: aliceblue;
+    transition: 0.3s;
+    &:hover {
+      color: #1d201f;
+    }
+  }
+}
+
 @media (max-width: 730px) {
+  .fancy-grad {
+    font-size: 2.9rem;
+  }
   #sidebar {
     width: 100vw;
     #menu {
@@ -313,8 +346,7 @@ a {
       left: -100vw;
     }
   }
-}
-
-footer {
-  padding: 1.5rem;
+  #contact-us a {
+    width: 100%;
+  }
 }

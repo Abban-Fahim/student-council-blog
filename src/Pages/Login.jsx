@@ -12,7 +12,7 @@ const Login = ({ isAdmin, setIsAdmin }) => {
 
   function auth() {
     const date = Date.now();
-    const sevenDays = 7 * 24 * 60 * 60 * 100 + date;
+    const sevenDays = 7 * 24 * 60 * 60 * 1000 + date;
     console.log(sevenDays - date);
     if (password === correctPass) {
       window.localStorage.setItem(
