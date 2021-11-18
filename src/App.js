@@ -14,6 +14,7 @@ const emails = [
   { title: "Head Girl", email: "sheemamohamed1505810h@gmail.com" },
   { title: "Boys H&W Ambassador", email: "muhammadtalhaijaz2005@gmail.com" },
   { title: "Girls H&W Ambassador", email: "sagdawael39@gmail.com" },
+  { title: "Deputy Head Girl", email: "amanah.sajid17030@auschool.ae" },
 ];
 
 function App() {
@@ -112,9 +113,9 @@ function App() {
         </button>
       </div>
       <header className="d-flex justify-content-end align-items-center p-3">
-        <div className="text-center" id="logo">
+        <a href="/" className="text-center" id="logo">
           <img src="img/AUSLogo.png" alt="Arab Unity Logo" />
-        </div>
+        </a>
       </header>
       <button
         onClick={toggleTheme}

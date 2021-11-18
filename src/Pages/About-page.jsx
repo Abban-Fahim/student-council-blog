@@ -11,7 +11,7 @@ const AboutPage = () => {
           events and activities taking place at our school, also keeping them
           informed on major activities that the student council instigates,
           publishing articles in awareness of pivotal topics surrounding the
-          welfare of students and a place for students to envice their skills
+          welfare of students and a place for students to evince their skills
           and talents.
         </p>
         <hr />
@@ -31,8 +31,8 @@ const AboutPage = () => {
         .
       </p>
       <p>
-        All content on this page is copyright of the Student Council of Arab
-        Unity School, 2021 - 2022, unless otherwise explicitly said so.
+        All content posted on this page is originally made by the Student
+        Council or students of Arab Unity School.
       </p>
     </main>
   );
