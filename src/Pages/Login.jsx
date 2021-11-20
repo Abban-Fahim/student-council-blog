@@ -7,30 +7,26 @@ import Loading from "../Loading";
 const Login = ({ isAdmin, setIsAdmin }) => {
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(false);
-  const [loadingPass, setLoadingPass] = useState(true);
-  const [correctPass, setCorrectPass] = useState("");
+  const [loadingPass, setLoadingPass] = useState(false);
 
   function auth() {
     const date = Date.now();
     const sevenDays = 7 * 24 * 60 * 60 * 1000 + date;
     console.log(sevenDays - date);
-    if (password === correctPass) {
-      window.localStorage.setItem(
-        "isAdmin",
-        JSON.stringify({ expiry: sevenDays, auth: true })
-      );
-      setIsAdmin(true);
-    } else {
-      setErr(true);
-    }
-  }
-
-  useEffect(() => {
+    setLoadingPass(true);
     getDoc(doc(db, "password", "admin")).then((val) => {
-      setCorrectPass(val.data().password);
+      if (password === val.data().password) {
+        window.localStorage.setItem(
+          "isAdmin",
+          JSON.stringify({ expiry: sevenDays, auth: true })
+        );
+        setIsAdmin(true);
+      } else {
+        setErr(true);
+      }
       setLoadingPass(false);
     });
-  }, []);
+  }
 
   return (
     <main className="container">

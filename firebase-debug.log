@@ -1,0 +1,31 @@
+[debug] [2021-11-18T04:14:33.658Z] ----------------------------------------------------------------------
+[debug] [2021-11-18T04:14:33.661Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\lloyd\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2021-11-18T04:14:33.661Z] CLI Version:   9.21.0
+[debug] [2021-11-18T04:14:33.661Z] Platform:      win32
+[debug] [2021-11-18T04:14:33.661Z] Node Version:  v14.15.5
+[debug] [2021-11-18T04:14:33.668Z] Time:          Thu Nov 18 2021 08:14:33 GMT+0400 (Gulf Standard Time)
+[debug] [2021-11-18T04:14:33.668Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-11-18T04:14:33.723Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-11-18T04:14:33.723Z] > authorizing via signed-in user (lloydtechno58@gmail.com)
+[debug] [2021-11-18T04:14:33.723Z] [iam] checking project student-council-site for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2021-11-18T04:14:33.725Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/student-council-site:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2021-11-18T04:14:35.386Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 18 Nov 2021 04:14:35 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1188","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-18T04:14:35.388Z] > refreshing access token with scopes: []
+[debug] [2021-11-18T04:14:35.388Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-18T04:14:35.676Z] <<< HTTP RESPONSE 200 {"pragma":"no-cache","date":"Thu, 18 Nov 2021 04:14:36 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-18T04:14:35.700Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/student-council-site [none]
+[debug] [2021-11-18T04:14:36.413Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/student-council-site 200
+[debug] [2021-11-18T04:14:36.413Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/student-council-site {"projectId":"student-council-site","projectNumber":"89634448354","displayName":"student-council-site","name":"projects/student-council-site","resources":{"hostingSite":"student-council-site","storageBucket":"student-council-site.appspot.com","locationId":"europe-central2"},"state":"ACTIVE"}
+[info] 
+[info] === Deploying to 'student-council-site'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2021-11-18T04:14:36.418Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-11-18T04:14:36.418Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-18T04:14:36.715Z] <<< HTTP RESPONSE 200 {"date":"Thu, 18 Nov 2021 04:14:37 GMT","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-18T04:14:36.738Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/student-council-site/versions  
+ {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}

@@ -28,7 +28,7 @@ const MainPage = () => {
             {cringyVow}
           </p>
         </div>
-        <div className="row">
+        <div className="row flex-wrap-reverse">
           <div className="col-md-9 p-3">
             <h2>
               <i className="bi bi-newspaper text-primary"></i> All Announcements
@@ -60,6 +60,7 @@ const MainPage = () => {
             <h2>
               <i className="bi bi-stars text-primary"></i>Featured
             </h2>
+            <small className="text-secondary">Nothing featured right now</small>
           </div>
         </div>
       </section>
