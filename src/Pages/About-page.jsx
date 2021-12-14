@@ -8,11 +8,11 @@ const AboutPage = () => {
         <h2 className="fancy-grad-3">Our Vision</h2>
         <p>
           Our vision aims to take initiatives and bring notice to imminent
-          events and activities taking place at our school, also keeping them
-          informed on major activities that the student council instigates,
-          publishing articles in awareness of pivotal topics surrounding the
-          welfare of students and a place for students to evince their skills
-          and talents.
+          events and activities taking place at our school, also keeping
+          students informed on major activities that the student council
+          instigates, publishing articles in awareness of pivotal topics
+          surrounding the welfare of students and a place for students to evince
+          their skills and talents.
         </p>
         <hr />
       </div>

@@ -112,7 +112,7 @@ function App() {
           <i className="bi bi-list"></i>
         </button>
       </div>
-      <header className="d-flex justify-content-end align-items-center p-3">
+      <header>
         <a href="/" className="text-center" id="logo">
           <img src="img/AUSLogo.png" alt="Arab Unity Logo" />
         </a>

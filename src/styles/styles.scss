@@ -12,6 +12,10 @@ p {
   font-size: 1.2rem;
 }
 
+header {
+  transition: 0.3s;
+}
+
 body {
   font-family: "Zen Kaku Gothic New", sans-serif;
   overflow-x: hidden;
@@ -49,7 +53,7 @@ body {
 .announcement {
   background-color: #ffffff60;
   border-radius: 12px;
-  transition-duration: 0.5s;
+  transition-duration: 0.2s;
   padding: 5px 20px;
   margin-bottom: 12px;
   position: relative;
@@ -70,7 +74,7 @@ body {
   &:hover {
     background-color: #1baf64 !important;
     box-shadow: #64646450 5px 5px 24px;
-    scale: 1.05;
+    transform: scale(1.015);
   }
   h5 {
     font-weight: 700;
@@ -145,6 +149,7 @@ hr {
   line-height: 4.2rem;
   font-weight: bold;
   text-shadow: 2px 2px 1px #00000063;
+  margin-bottom: 80px;
 }
 
 .fancy-grad-3 {
@@ -177,10 +182,21 @@ hr {
   }
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
 #logo {
-  flex: 1;
+  max-width: max-content;
   img {
+    transition-duration: 0.1s;
     width: 10rem;
+    &:hover {
+      filter: brightness(0.7);
+    }
   }
 }
 
