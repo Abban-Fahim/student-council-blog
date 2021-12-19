@@ -9,11 +9,7 @@ h4 {
 }
 
 p {
-  font-size: 1.2rem;
-}
-
-header {
-  transition: 0.3s;
+  font-size: 1rem;
 }
 
 body {
@@ -24,21 +20,45 @@ body {
 #light {
   background-color: aliceblue;
   transition: 0.25s ease-in;
+  background-image: url("../bubbles.svg");
   #sidebar {
     background-color: #aeaeae85;
   }
   .announcement {
     background-color: #eeffec;
-    h5 {
+    h5,
+    h6 {
       color: black;
     }
   }
+}
+
+.nav {
+  justify-content: space-around;
+  padding: 12px;
+  .nav-item {
+    border-radius: 24px;
+    padding: 5px 12px;
+    transition-duration: 0.2s;
+    &:hover {
+      background-color: #ffffff40;
+    }
+  }
+  .current {
+    background-color: #00ffa2 !important;
+  }
+}
+
+.icon {
+  width: 34px;
+  font-size: 34px;
 }
 
 #dark {
   background-color: #1d201f;
   color: white;
   transition: 0.25s ease-in;
+  background-image: url("../bubbles.svg");
   #sidebar {
     background-color: #00000085;
     #close {
@@ -76,10 +96,14 @@ body {
     box-shadow: #64646450 5px 5px 24px;
     transform: scale(1.015);
   }
-  h5 {
+  h5,
+  h6 {
     font-weight: 700;
     color: white;
     font-size: 2.5rem;
+  }
+  h6 {
+    font-size: 2rem;
   }
 }
 
@@ -110,7 +134,7 @@ hr {
 
 .about-page {
   text-shadow: 2px 2px 1px #00000063;
-  font-size: 5.1rem;
+  font-size: 5rem;
 }
 
 .bg-aus {
@@ -153,16 +177,9 @@ hr {
 }
 
 .fancy-grad-3 {
-  background: linear-gradient(90deg, #1baf64, #065d33);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  background-size: 65%;
-  background-position: right;
+  color: #065d33;
   font-size: 3rem;
-  line-height: 4.2rem;
   font-weight: bold;
-  text-shadow: 2px 2px 1px #00000063;
 }
 
 #exhibitions {
@@ -297,6 +314,9 @@ input {
 
 .post-input {
   margin: 30px auto;
+  border: 2px solid;
+  border-radius: 12px;
+  padding: 16px;
 }
 
 .Dropdown-control {
@@ -331,6 +351,10 @@ a {
   }
 }
 
+.modal-dialog {
+  margin-right: 30px;
+}
+
 footer {
   background-color: #1baf64;
   padding: 1.5rem;
@@ -347,9 +371,17 @@ footer {
   }
 }
 
+.text-justify {
+  text-align: justify;
+}
+
+// mobile media query
 @media (max-width: 730px) {
   .fancy-grad {
     font-size: 2.9rem;
+  }
+  .about-page {
+    font-size: 4.4rem;
   }
   #sidebar {
     width: 100vw;

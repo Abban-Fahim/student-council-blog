@@ -1,21 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  convertFromHTML,
-  convertToRaw,
-  Editor,
-  EditorState,
-  RichUtils,
-} from "draft-js";
+import { Editor, EditorState, RichUtils } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { stateToHTML } from "draft-js-export-html";
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  serverTimestamp,
-  updateDoc,
-} from "@firebase/firestore";
+import { doc, getDoc, serverTimestamp, updateDoc } from "@firebase/firestore";
 import { db } from "../firebase";
 import ReactDropdown from "react-dropdown";
 import "react-dropdown/style.css";
@@ -24,7 +11,7 @@ import { stateFromHTML } from "draft-js-import-html";
 import Loading from "../Loading";
 
 const EditPage = ({ isAdmin }) => {
-  const { id } = useParams();
+  const { route, id } = useParams();
   const [postLoading, setPostLoading] = useState(true);
   const history = useHistory();
 
@@ -33,11 +20,12 @@ const EditPage = ({ isAdmin }) => {
   }, []);
 
   useEffect(() => {
-    getDoc(doc(db, "posts", id)).then((val) => {
-      let { title, content, author } = val.data();
+    getDoc(doc(db, route, id)).then((val) => {
+      let { title, content, author, genre } = val.data();
       setTitle(title);
       setAuthor(author);
       setEditorState(EditorState.createWithContent(stateFromHTML(content)));
+      setGenre(genre);
       setPostLoading(false);
     });
   }, []);
@@ -49,6 +37,7 @@ const EditPage = ({ isAdmin }) => {
   const editorRef = useRef(null);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const [genre, setGenre] = useState("");
 
   const handleKeyCommand = useCallback(
     (command, editorState) => {
@@ -63,12 +52,13 @@ const EditPage = ({ isAdmin }) => {
   );
 
   function updatePost() {
-    updateDoc(doc(db, "posts", id), {
+    updateDoc(doc(db, route, id), {
       title: title,
       content: htmlPreview,
       date: new Date().toLocaleDateString("en-GB"),
       timeStamp: serverTimestamp(),
       author: author,
+      genre: genre,
     })
       .then(() => history.push("/"))
       .catch((err) => console.error(err));
@@ -77,6 +67,8 @@ const EditPage = ({ isAdmin }) => {
   function focus() {
     if (editorRef.current) editorRef.current.focus();
   }
+
+  const genres = ["General", "World", "Sports", "Welfare", "Technology"];
 
   const inlineStyles = [
     { label: "bold", style: "BOLD" },
@@ -106,12 +98,31 @@ const EditPage = ({ isAdmin }) => {
         <Loading />
       ) : (
         <>
-          <div className="container post-input border border-2 rounded-3 p-3">
+          <div className="container post-input">
             <h4>Post title</h4>
             <input
               type="text"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
+            />
+          </div>
+          {route === "posts" ? (
+            <div className="container post-input">
+              <h4>Author</h4>
+              <input
+                type="text"
+                onChange={(e) => setAuthor(e.target.value)}
+                value={author}
+              />
+            </div>
+          ) : null}
+          <div className="container post-input">
+            <h4>Genre</h4>
+            <ReactDropdown
+              options={genres}
+              className="me-2"
+              onChange={(genre) => setGenre(genre.value)}
+              value={genre}
             />
           </div>
           <div className="btn-toolbar container" role="toolbar">
@@ -183,24 +194,13 @@ const EditPage = ({ isAdmin }) => {
               ))}
             </div>
           </div>
-          <div
-            onClick={focus}
-            className="container post-input border border-2 rounded-3 p-3"
-          >
+          <div onClick={focus} className="container post-input">
             <h4>Post Content</h4>
             <Editor
               ref={editorRef}
               editorState={editorState}
               onChange={setEditorState}
               handleKeyCommand={handleKeyCommand}
-            />
-          </div>
-          <div className="container post-input border border-2 rounded-3 p-3">
-            <h4>Author</h4>
-            <input
-              type="text"
-              onChange={(e) => setAuthor(e.target.value)}
-              value={author}
             />
           </div>
           <button
@@ -212,7 +212,20 @@ const EditPage = ({ isAdmin }) => {
           </button>
           <hr className="bg-primary" />
           <h5>Actual Preview</h5>
-          <div dangerouslySetInnerHTML={{ __html: htmlPreview }}></div>
+          <div className="container">
+            <h1>{title}</h1>
+            <div className="text-end" style={{ marginBottom: "2.5rem" }}>
+              <i className="text-secondary d-block">
+                <b>By:</b> {author}
+              </i>
+              <i>Published on: {new Date().toLocaleDateString("en-GB")}</i>
+            </div>
+            <div
+              className="container"
+              id="content"
+              dangerouslySetInnerHTML={{ __html: htmlPreview }}
+            />
+          </div>
         </>
       )}
     </main>

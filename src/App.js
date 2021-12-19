@@ -8,6 +8,9 @@ import ExhibitionPage from "./Pages/Exhibition-page";
 import Login from "./Pages/Login";
 import AdminPage from "./Pages/Admin-page";
 import EditPage from "./Pages/Edit-page";
+import logoIMG from "./AUSLogo.png";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "./firebase";
 
 const emails = [
   { title: "Head Boy", email: "kingshukpaul133569d@gmail.com" },
@@ -21,6 +24,11 @@ function App() {
   const [sidebarVisisble, setSideBarVisible] = useState(false);
   const [theme, setTheme] = useState("dark");
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const [posts, setPosts] = useState([]);
+  const [postsLoading, setPostsLoading] = useState(true);
+  const [eventsLoading, setEventsLoading] = useState(true);
+  const [events, setEvents] = useState([]);
 
   const toggleTheme = () => {
     theme === "light" ? setTheme("dark") : setTheme("light");
@@ -37,6 +45,7 @@ function App() {
   }
 
   useEffect(() => {
+    // get cookie to check if client is admin
     const date = Date.now();
     let keyStr = window.localStorage.getItem("isAdmin");
     if (keyStr) {
@@ -44,6 +53,20 @@ function App() {
       console.log(key);
       if (date < key.expiry) setIsAdmin(true);
     }
+    // get all the latest posts
+    getDocs(query(collection(db, "posts"), orderBy("timeStamp", "desc"))).then(
+      (val) => {
+        setPosts(val);
+        setPostsLoading(false);
+      }
+    );
+    // get all teh latest events
+    getDocs(query(collection(db, "events"), orderBy("timeStamp", "desc"))).then(
+      (val) => {
+        setEvents(val);
+        setEventsLoading(false);
+      }
+    );
   }, []);
 
   function handleHoverOut() {
@@ -113,9 +136,9 @@ function App() {
         </button>
       </div>
       <header>
-        <a href="/" className="text-center" id="logo">
-          <img src="img/AUSLogo.png" alt="Arab Unity Logo" />
-        </a>
+        <Link to="/" className="text-center" id="logo">
+          <img src={logoIMG} alt="Arab Unity Logo" />
+        </Link>
       </header>
       <button
         onClick={toggleTheme}
@@ -126,26 +149,47 @@ function App() {
       </button>
       <Switch>
         <Route path="/about" children={<AboutPage />} />
-        <Route path="/admin/new" children={<NewPost isAdmin={isAdmin} />} />
+        <Route path="/admin/:route" children={<NewPost isAdmin={isAdmin} />} />
         <Route path="/exhibition" children={<ExhibitionPage />} />
         <Route
           path="/login"
           children={<Login isAdmin={isAdmin} setIsAdmin={setIsAdmin} />}
         />
-        <Route path="/admin" children={<AdminPage isAdmin={isAdmin} />} />
-        <Route path="/edit/:id" children={<EditPage isAdmin={isAdmin} />} />
+        <Route
+          path="/admin"
+          children={
+            <AdminPage
+              posts={posts}
+              events={events}
+              postsLoading={postsLoading}
+              eventsLoading={eventsLoading}
+              isAdmin={isAdmin}
+            />
+          }
+        />
+        <Route
+          path="/edit/:route/:id"
+          children={<EditPage isAdmin={isAdmin} />}
+        />
         <Route path="/post/:postID" children={<PostPage />} />
-        <Route path="/" children={<MainPage />} />
+        <Route
+          path="/"
+          children={
+            <MainPage
+              posts={posts}
+              events={events}
+              postsLoading={postsLoading}
+              eventsLoading={eventsLoading}
+            />
+          }
+        />
       </Switch>
       <footer>
         <div id="contact-us">
           <p>Contact us</p>
           {emails.map((val) => {
             return (
-              <a
-                target="_blank"
-                href={"https://mail.google.com/mail?view=cm&to=" + val.email}
-              >
+              <a target="_blank" href={"mailto:" + val.email}>
                 <small>{val.title}</small>
               </a>
             );

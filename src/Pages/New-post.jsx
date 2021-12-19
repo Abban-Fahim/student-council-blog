@@ -6,10 +6,12 @@ import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
 import { db } from "../firebase";
 import ReactDropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const NewPost = ({ isAdmin }) => {
   const history = useHistory();
+  const { route } = useParams();
+  const isPost = route === "post";
 
   useEffect(() => {
     if (!isAdmin) history.push("/");
@@ -22,6 +24,7 @@ const NewPost = ({ isAdmin }) => {
   const editorRef = useRef(null);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const [genre, setGenre] = useState("General");
 
   const handleKeyCommand = useCallback(
     (command, editorState) => {
@@ -36,12 +39,13 @@ const NewPost = ({ isAdmin }) => {
   );
 
   function createPost() {
-    addDoc(collection(db, "posts"), {
+    addDoc(collection(db, isPost ? "posts" : "events"), {
       title: title,
       content: htmlPreview,
       date: new Date().toLocaleDateString("en-GB"),
       timeStamp: serverTimestamp(),
       author: author,
+      genre: genre,
     })
       .then(() => history.push("/"))
       .catch((err) => console.error(err));
@@ -63,6 +67,8 @@ const NewPost = ({ isAdmin }) => {
     { label: "list-ol", style: "ordered-list-item" },
   ];
 
+  const genres = ["General", "World", "Sports", "Welfare", "Technology"];
+
   const headings = [
     { label: "Paragraph", value: "paragraph" },
     { label: "Heading 1", value: "header-one" },
@@ -75,12 +81,33 @@ const NewPost = ({ isAdmin }) => {
 
   return (
     <main>
-      <div className="container post-input border border-2 rounded-3 p-3">
+      <div className="container post-input">
         <h4>Post title</h4>
         <input
           type="text"
           onChange={(e) => setTitle(e.target.value)}
           value={title}
+        />
+      </div>
+      {isPost ? (
+        <div className="container post-input">
+          <h4>Author</h4>
+          <input
+            type="text"
+            onChange={(e) => setAuthor(e.target.value)}
+            value={author}
+          />
+        </div>
+      ) : (
+        ""
+      )}
+      <div className="container post-input">
+        <h4>Genre</h4>
+        <ReactDropdown
+          options={genres}
+          className="me-2"
+          onChange={(genre) => setGenre(genre.value)}
+          value={genre}
         />
       </div>
       <div className="btn-toolbar container" role="toolbar">
@@ -143,24 +170,13 @@ const NewPost = ({ isAdmin }) => {
           ))}
         </div>
       </div>
-      <div
-        onClick={focus}
-        className="container post-input border border-2 rounded-3 p-3"
-      >
+      <div onClick={focus} className="container post-input">
         <h4>Post Content</h4>
         <Editor
           ref={editorRef}
           editorState={editorState}
           onChange={setEditorState}
           handleKeyCommand={handleKeyCommand}
-        />
-      </div>
-      <div className="container post-input border border-2 rounded-3 p-3">
-        <h4>Author</h4>
-        <input
-          type="text"
-          onChange={(e) => setAuthor(e.target.value)}
-          value={author}
         />
       </div>
       <button
@@ -172,7 +188,20 @@ const NewPost = ({ isAdmin }) => {
       </button>
       <hr className="bg-primary" />
       <h5>Actual Preview</h5>
-      <div dangerouslySetInnerHTML={{ __html: htmlPreview }}></div>
+      <div className="container">
+        <h1>{title}</h1>
+        <div className="text-end" style={{ marginBottom: "2.5rem" }}>
+          <i className="text-secondary d-block">
+            <b>By:</b> {author}
+          </i>
+          <i>Published on: {new Date().toLocaleDateString("en-GB")}</i>
+        </div>
+        <div
+          className="container"
+          id="content"
+          dangerouslySetInnerHTML={{ __html: htmlPreview }}
+        />
+      </div>
     </main>
   );
 };

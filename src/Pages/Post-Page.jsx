@@ -20,18 +20,18 @@ const PostPage = () => {
   else
     return (
       <main className="container">
-        <div className="d-flex justify-content-between">
-          <h1>{postInfo.title}</h1>
-          <i className="text-secondary">
+        <h1>{postInfo.title}</h1>
+        <div className="text-end" style={{ marginBottom: "2.5rem" }}>
+          <i className="text-secondary d-block">
             <b>By:</b> {postInfo.author}
           </i>
+          <i>Published on: {postInfo.date}</i>
         </div>
         <div
           className="container"
           id="content"
           dangerouslySetInnerHTML={{ __html: postInfo.content }}
         />
-        <i>Published on: {postInfo.date}</i>
       </main>
     );
 };

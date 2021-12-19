@@ -6,7 +6,7 @@ const AboutPage = () => {
       <div className="text-center">
         <h1 className="text-primary about-page">Secondary Student Council</h1>
         <h2 className="fancy-grad-3">Our Vision</h2>
-        <p>
+        <p className="text-justify p-4">
           Our vision aims to take initiatives and bring notice to imminent
           events and activities taking place at our school, also keeping
           students informed on major activities that the student council

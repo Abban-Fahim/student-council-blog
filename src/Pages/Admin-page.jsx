@@ -1,60 +1,54 @@
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  orderBy,
-  query,
-} from "@firebase/firestore";
+import { deleteDoc, doc } from "@firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { db } from "../firebase";
 import Loading from "../Loading";
+import Tab from "./TabComponent";
 
-const AdminPage = ({ isAdmin }) => {
-  const [posts, setPosts] = useState([]);
-  const [postsLoading, setPostsLoading] = useState(true);
+const AdminPage = ({ isAdmin, posts, events, postsLoading, eventsLoading }) => {
   const history = useHistory();
+  const [tab, setTab] = useState("General");
+
+  const tabOptions = [
+    { name: "General" },
+    { name: "World" },
+    { name: "Sports" },
+    { name: "Welfare" },
+    { name: "Technology" },
+    { name: "Events" },
+  ];
 
   useEffect(() => {
     if (!isAdmin) history.push("/");
   }, []);
 
-  useEffect(() => {
-    getDocs(query(collection(db, "posts"), orderBy("timeStamp", "desc"))).then(
-      (val) => {
-        setPosts(val);
-        setPostsLoading(false);
-      }
-    );
-  }, []);
-
-  function deletePost(id) {
-    deleteDoc(doc(db, "posts", id)).then(() => history.push("/"));
+  function deletePost(id, route) {
+    deleteDoc(doc(db, route, id)).then(() => window.location.reload());
   }
 
   return (
     <main className="container">
-      <h2>
-        <i className="bi bi-newspaper text-primary"></i> All Announcements
-        <Link to="/admin/new">New Article</Link>
+      <h2 className="d-flex justify-content-around">
+        <Link to="/admin/post">New Article</Link>
+        <Link to="/admin/event">New Event</Link>
       </h2>
+      <Tab currentTab={tab} setCurrentTab={setTab} options={tabOptions} />
       {postsLoading ? (
         <Loading />
-      ) : (
-        posts.docs.map((post) => {
+      ) : tab === "Events" ? (
+        events.docs.map((post) => {
           const { title, date, author } = post.data();
           return (
             <div className="announcement">
               <a>
                 <button
-                  onClick={() => deletePost(post.id)}
+                  onClick={() => deletePost(post.id, "events")}
                   id="delete"
                   className="btn announcement"
                 >
                   <i className="bi bi-trash"></i>
                 </button>
-                <Link to={"/edit/" + post.id}>
+                <Link to={`/edit/events/${post.id}`}>
                   <button id="edit" className="btn announcement">
                     <i className="bi bi-pencil-square"></i>
                   </button>
@@ -64,13 +58,42 @@ const AdminPage = ({ isAdmin }) => {
                   <p class="text-secondary">
                     <b>Published:</b> {date}
                   </p>
-                  <i className="text-secondary">
-                    <b>By:</b> {author}
-                  </i>
                 </div>
               </a>
             </div>
           );
+        })
+      ) : (
+        posts.docs.map((post) => {
+          const { title, date, author, genre } = post.data();
+          if (genre === tab)
+            return (
+              <div className="announcement">
+                <a>
+                  <button
+                    onClick={() => deletePost(post.id, "posts")}
+                    id="delete"
+                    className="btn announcement"
+                  >
+                    <i className="bi bi-trash"></i>
+                  </button>
+                  <Link to={`/edit/posts/${post.id}`}>
+                    <button id="edit" className="btn announcement">
+                      <i className="bi bi-pencil-square"></i>
+                    </button>
+                  </Link>
+                  <h5>{title}</h5>
+                  <div className="d-flex justify-content-between">
+                    <p class="text-secondary">
+                      <b>Published:</b> {date}
+                    </p>
+                    <i className="text-secondary">
+                      <b>By:</b> {author}
+                    </i>
+                  </div>
+                </a>
+              </div>
+            );
         })
       )}
     </main>
