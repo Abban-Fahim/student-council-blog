@@ -35,18 +35,28 @@ body {
 
 .nav {
   justify-content: space-around;
+  align-items: center;
   padding: 12px;
   .nav-item {
-    border-radius: 24px;
     padding: 5px 12px;
+    border-radius: 5px;
     transition-duration: 0.2s;
     &:hover {
+      border-radius: 24px;
       background-color: #ffffff40;
     }
   }
   .current {
-    background-color: #00ffa2 !important;
+    background-color: #1baf64 !important;
+    border-radius: 24px;
+    img {
+      filter: brightness(0.3);
+    }
   }
+}
+
+img {
+  vertical-align: 0;
 }
 
 .icon {

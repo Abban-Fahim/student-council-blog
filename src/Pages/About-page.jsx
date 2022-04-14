@@ -17,21 +17,14 @@ const AboutPage = () => {
         <hr />
       </div>
       <p>
-        This site is made by Abban Faheem. It is
+        This is the AUS Student Council's site, created by Abban Faheem and Talha Ijaz as an initiative to bridge the communication barrier with the students. It is
         <a href="https://github.com/Abban-Fahim/student-council-blog">
           open-sourced
         </a>
-        under an ISC lisence.
+        and open to contributions :)
       </p>
       <p>
-        To contribute, please
-        <a href="mailto:lloydtechno58@gmail.com?subject=Contributing to the Student Council Website">
-          contact
-        </a>
-        .
-      </p>
-      <p>
-        All content posted on this page is originally made by the Student
+        © All content posted on this page is originally made by the Student
         Council or students of Arab Unity School.
       </p>
     </main>

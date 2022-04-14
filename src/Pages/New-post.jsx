@@ -11,7 +11,6 @@ import { useHistory, useParams } from "react-router-dom";
 const NewPost = ({ isAdmin }) => {
   const history = useHistory();
   const { route } = useParams();
-  const isPost = route === "post";
 
   useEffect(() => {
     if (!isAdmin) history.push("/");
@@ -39,7 +38,7 @@ const NewPost = ({ isAdmin }) => {
   );
 
   function createPost() {
-    addDoc(collection(db, isPost ? "posts" : "events"), {
+    addDoc(collection(db, isAdmin === "journalist" ? "pending" : route), {
       title: title,
       content: htmlPreview,
       date: new Date().toLocaleDateString("en-GB"),
@@ -67,7 +66,7 @@ const NewPost = ({ isAdmin }) => {
     { label: "list-ol", style: "ordered-list-item" },
   ];
 
-  const genres = ["General", "World", "Sports", "Welfare", "Technology"];
+  const genres = ["General", "World", "Sports", "Welfare", "Technology", "101"];
 
   const headings = [
     { label: "Paragraph", value: "paragraph" },
@@ -89,27 +88,30 @@ const NewPost = ({ isAdmin }) => {
           value={title}
         />
       </div>
-      {isPost ? (
-        <div className="container post-input">
-          <h4>Author</h4>
-          <input
-            type="text"
-            onChange={(e) => setAuthor(e.target.value)}
-            value={author}
-          />
-        </div>
+      {route === "posts" ? (
+        <>
+          <div className="container post-input">
+            <h4>Author</h4>
+            <input
+              type="text"
+              onChange={(e) => setAuthor(e.target.value)}
+              value={author}
+            />
+          </div>
+          <div className="container post-input">
+            <h4>Genre</h4>
+            <ReactDropdown
+              options={genres}
+              className="me-2"
+              onChange={(genre) => setGenre(genre.value)}
+              value={genre}
+            />
+          </div>
+        </>
       ) : (
         ""
       )}
-      <div className="container post-input">
-        <h4>Genre</h4>
-        <ReactDropdown
-          options={genres}
-          className="me-2"
-          onChange={(genre) => setGenre(genre.value)}
-          value={genre}
-        />
-      </div>
+
       <div className="btn-toolbar container" role="toolbar">
         <div className="btn-group me-2" role="group">
           {inlineStyles.map((type) => {
@@ -187,21 +189,24 @@ const NewPost = ({ isAdmin }) => {
         Create
       </button>
       <hr className="bg-primary" />
-      <h5>Actual Preview</h5>
-      <div className="container">
-        <h1>{title}</h1>
-        <div className="text-end" style={{ marginBottom: "2.5rem" }}>
-          <i className="text-secondary d-block">
-            <b>By:</b> {author}
-          </i>
-          <i>Published on: {new Date().toLocaleDateString("en-GB")}</i>
+      {route === "posts" ? (
+        <div className="container">
+          <h1>{title}</h1>
+          <div className="text-end" style={{ marginBottom: "2.5rem" }}>
+            <i className="text-secondary d-block">
+              <b>By:</b> {author}
+            </i>
+            <i>Published on: {new Date().toLocaleDateString("en-GB")}</i>
+          </div>
+          <div
+            className="container"
+            id="content"
+            dangerouslySetInnerHTML={{ __html: htmlPreview }}
+          />
         </div>
-        <div
-          className="container"
-          id="content"
-          dangerouslySetInnerHTML={{ __html: htmlPreview }}
-        />
-      </div>
+      ) : (
+        ""
+      )}
     </main>
   );
 };

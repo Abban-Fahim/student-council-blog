@@ -16,10 +16,11 @@ const MainPage = ({ posts, events, postsLoading, eventsLoading }) => {
 
   const tabOptions = [
     { name: "General", img: AUSLOGO },
-    { name: "World", icon: "globe" },
-    { name: "Sports", icon: "dribbble" },
-    { name: "Welfare", icon: "emoji-smile" },
-    { name: "Technology", icon: "cpu" },
+    { name: "World" },
+    { name: "Sports" },
+    { name: "Welfare" },
+    { name: "101" },
+    { name: "Technology" },
   ];
 
   function filterPosts(genre) {
@@ -41,20 +42,21 @@ const MainPage = ({ posts, events, postsLoading, eventsLoading }) => {
         ></ModalBody>
       </Modal>
       <section class="container-fluid">
-        <div className="container-fluid bg-aus d-flex">
+        {/* <div className="container-fluid bg-aus d-flex">
           <p id="cringyVow" class="h4">
             {cringyVow}
           </p>
-        </div>
+        </div> */}
         <div className="row flex-wrap-reverse">
           <div className="col-md-9 p-3">
-            <h2>
+            <div className="fw-bolder text-uppercase">
               <Tab
                 currentTab={tab}
                 setCurrentTab={filterPosts}
                 options={tabOptions}
               />
-            </h2>
+            </div>
+
             {postsLoading ? (
               <Loading />
             ) : (

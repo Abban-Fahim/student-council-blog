@@ -2,7 +2,14 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Editor, EditorState, RichUtils } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { stateToHTML } from "draft-js-export-html";
-import { doc, getDoc, serverTimestamp, updateDoc } from "@firebase/firestore";
+import {
+  doc,
+  getDoc,
+  serverTimestamp,
+  updateDoc,
+  addDoc,
+  collection,
+} from "@firebase/firestore";
 import { db } from "../firebase";
 import ReactDropdown from "react-dropdown";
 import "react-dropdown/style.css";
@@ -52,23 +59,14 @@ const EditPage = ({ isAdmin }) => {
   );
 
   function updatePost() {
-    updateDoc(doc(db, route, id), {
-      title: title,
-      content: htmlPreview,
-      date: new Date().toLocaleDateString("en-GB"),
-      timeStamp: serverTimestamp(),
-      author: author,
-      genre: genre,
-    })
-      .then(() => history.push("/"))
-      .catch((err) => console.error(err));
+    
   }
 
   function focus() {
     if (editorRef.current) editorRef.current.focus();
   }
 
-  const genres = ["General", "World", "Sports", "Welfare", "Technology"];
+  const genres = ["General", "World", "Sports", "Welfare", "Technology", "101"];
 
   const inlineStyles = [
     { label: "bold", style: "BOLD" },
@@ -107,24 +105,28 @@ const EditPage = ({ isAdmin }) => {
             />
           </div>
           {route === "posts" ? (
-            <div className="container post-input">
-              <h4>Author</h4>
-              <input
-                type="text"
-                onChange={(e) => setAuthor(e.target.value)}
-                value={author}
-              />
-            </div>
-          ) : null}
-          <div className="container post-input">
-            <h4>Genre</h4>
-            <ReactDropdown
-              options={genres}
-              className="me-2"
-              onChange={(genre) => setGenre(genre.value)}
-              value={genre}
-            />
-          </div>
+            <>
+              <div className="container post-input">
+                <h4>Author</h4>
+                <input
+                  type="text"
+                  onChange={(e) => setAuthor(e.target.value)}
+                  value={author}
+                />
+              </div>
+              <div className="container post-input">
+                <h4>Genre</h4>
+                <ReactDropdown
+                  options={genres}
+                  className="me-2"
+                  onChange={(genre) => setGenre(genre.value)}
+                  value={genre}
+                />
+              </div>
+            </>
+          ) : (
+            ""
+          )}
           <div className="btn-toolbar container" role="toolbar">
             <div className="btn-group me-2" role="group">
               {inlineStyles.map((type) => {
@@ -212,20 +214,24 @@ const EditPage = ({ isAdmin }) => {
           </button>
           <hr className="bg-primary" />
           <h5>Actual Preview</h5>
-          <div className="container">
-            <h1>{title}</h1>
-            <div className="text-end" style={{ marginBottom: "2.5rem" }}>
-              <i className="text-secondary d-block">
-                <b>By:</b> {author}
-              </i>
-              <i>Published on: {new Date().toLocaleDateString("en-GB")}</i>
+          {route === "posts" ? (
+            <div className="container">
+              <h1>{title}</h1>
+              <div className="text-end" style={{ marginBottom: "2.5rem" }}>
+                <i className="text-secondary d-block">
+                  <b>By:</b> {author}
+                </i>
+                <i>Published on: {new Date().toLocaleDateString("en-GB")}</i>
+              </div>
+              <div
+                className="container"
+                id="content"
+                dangerouslySetInnerHTML={{ __html: htmlPreview }}
+              />
             </div>
-            <div
-              className="container"
-              id="content"
-              dangerouslySetInnerHTML={{ __html: htmlPreview }}
-            />
-          </div>
+          ) : (
+            ""
+          )}
         </>
       )}
     </main>

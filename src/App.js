@@ -11,6 +11,7 @@ import EditPage from "./Pages/Edit-page";
 import logoIMG from "./AUSLogo.png";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "./firebase";
+import PendingPosts from "./Pages/PendingPosts";
 
 const emails = [
   { title: "Head Boy", email: "kingshukpaul133569d@gmail.com" },
@@ -23,7 +24,7 @@ const emails = [
 function App() {
   const [sidebarVisisble, setSideBarVisible] = useState(false);
   const [theme, setTheme] = useState("dark");
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState("");
 
   const [posts, setPosts] = useState([]);
   const [postsLoading, setPostsLoading] = useState(true);
@@ -51,7 +52,7 @@ function App() {
     if (keyStr) {
       let key = JSON.parse(keyStr);
       console.log(key);
-      if (date < key.expiry) setIsAdmin(true);
+      if (date < key.expiry) setIsAdmin(key.level);
     }
     // get all the latest posts
     getDocs(query(collection(db, "posts"), orderBy("timeStamp", "desc"))).then(
@@ -167,6 +168,13 @@ function App() {
             />
           }
         />
+        <Route path="/pending" children={
+            <PendingPosts 
+              posts={posts}
+              events={events}
+              postsLoading={postsLoading}
+              eventsLoading={eventsLoading}
+              isAdmin={isAdmin} />} />
         <Route
           path="/edit/:route/:id"
           children={<EditPage isAdmin={isAdmin} />}

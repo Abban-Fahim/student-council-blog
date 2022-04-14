@@ -26,28 +26,35 @@ const AdminPage = ({ isAdmin, posts, events, postsLoading, eventsLoading }) => {
     deleteDoc(doc(db, route, id)).then(() => window.location.reload());
   }
 
+  console.log(isAdmin);
+
   return (
     <main className="container">
       <h2 className="d-flex justify-content-around">
-        <Link to="/admin/post">New Article</Link>
-        <Link to="/admin/event">New Event</Link>
+        <Link to="/admin/posts">New Article</Link>
+        <Link to="/admin/events">New Event</Link>
+        <Link to="/pending">Pending posts</Link>
       </h2>
       <Tab currentTab={tab} setCurrentTab={setTab} options={tabOptions} />
-      {postsLoading ? (
+      {postsLoading && eventsLoading ? (
         <Loading />
       ) : tab === "Events" ? (
         events.docs.map((post) => {
-          const { title, date, author } = post.data();
+          const { title, date } = post.data();
           return (
             <div className="announcement">
               <a>
-                <button
-                  onClick={() => deletePost(post.id, "events")}
-                  id="delete"
-                  className="btn announcement"
-                >
-                  <i className="bi bi-trash"></i>
-                </button>
+                {isAdmin === "admin" ? (
+                  <button
+                    onClick={() => deletePost(post.id, "events")}
+                    id="delete"
+                    className="btn announcement"
+                  >
+                    <i className="bi bi-trash"></i>
+                  </button>
+                ) : (
+                  ""
+                )}
                 <Link to={`/edit/events/${post.id}`}>
                   <button id="edit" className="btn announcement">
                     <i className="bi bi-pencil-square"></i>
@@ -70,13 +77,17 @@ const AdminPage = ({ isAdmin, posts, events, postsLoading, eventsLoading }) => {
             return (
               <div className="announcement">
                 <a>
-                  <button
-                    onClick={() => deletePost(post.id, "posts")}
-                    id="delete"
-                    className="btn announcement"
-                  >
-                    <i className="bi bi-trash"></i>
-                  </button>
+                  {isAdmin === "admin" ? (
+                    <button
+                      onClick={() => deletePost(post.id, "posts")}
+                      id="delete"
+                      className="btn announcement"
+                    >
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  ) : (
+                    ""
+                  )}
                   <Link to={`/edit/posts/${post.id}`}>
                     <button id="edit" className="btn announcement">
                       <i className="bi bi-pencil-square"></i>

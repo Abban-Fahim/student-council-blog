@@ -3,24 +3,26 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../firebase";
 import Loading from "../Loading";
+import Tab from "./TabComponent";
 
 const Login = ({ isAdmin, setIsAdmin }) => {
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(false);
   const [loadingPass, setLoadingPass] = useState(false);
+  const [privelage, setPrivelage] = useState("journalist");
 
   function auth() {
     const date = Date.now();
     const sevenDays = 7 * 24 * 60 * 60 * 1000 + date;
     console.log(sevenDays - date);
     setLoadingPass(true);
-    getDoc(doc(db, "password", "admin")).then((val) => {
+    getDoc(doc(db, "password", privelage)).then((val) => {
       if (password === val.data().password) {
         window.localStorage.setItem(
           "isAdmin",
-          JSON.stringify({ expiry: sevenDays, auth: true })
+          JSON.stringify({ expiry: sevenDays, level: privelage })
         );
-        setIsAdmin(true);
+        setIsAdmin(privelage);
       } else {
         setErr(true);
       }
@@ -30,6 +32,11 @@ const Login = ({ isAdmin, setIsAdmin }) => {
 
   return (
     <main className="container">
+      <Tab
+        currentTab={privelage}
+        setCurrentTab={setPrivelage}
+        options={[{ name: "journalist" }, { name: "admin" }]}
+      />
       {isAdmin ? (
         <h2>
           You're already signed in. Go to
